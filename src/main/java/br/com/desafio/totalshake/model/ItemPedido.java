@@ -23,7 +23,7 @@ public class ItemPedido {
 
     private String descricao;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "pedido_id", referencedColumnName = "id", nullable = false)
     private Pedido pedido;
 
 }
