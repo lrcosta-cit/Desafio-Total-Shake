@@ -1,12 +1,13 @@
 package br.com.desafio.totalshake.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+
 
 @Entity(name = "item_pedido")
 @AllArgsConstructor
@@ -22,8 +23,10 @@ public class ItemPedido {
     private Integer quantidade;
 
     private String descricao;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pedido_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Pedido pedido;
 
 }

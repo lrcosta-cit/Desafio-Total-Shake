@@ -4,10 +4,12 @@ import br.com.desafio.totalshake.enums.Status;
 import br.com.desafio.totalshake.exception.PedidoNotFoundException;
 import br.com.desafio.totalshake.model.Pedido;
 import br.com.desafio.totalshake.repository.PedidoRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Service
 public class PedidoService {
@@ -27,7 +29,6 @@ public class PedidoService {
     }
 
     public Pedido salvar(Pedido pedido){
-        pedido.setId(null);
         pedido.setDataHora(LocalDateTime.now());
         pedido.setStatus(Status.REALIZADO);
         return pedidoRepository.save(pedido);
@@ -37,6 +38,15 @@ public class PedidoService {
         Pedido pedidoAtual = buscarPorId(id);
 
         pedidoAtual.setStatus(pedidoNovo.getStatus());
+
+        return pedidoRepository.save(pedidoAtual);
+    }
+
+    public Pedido atualizarItensPedido(Long id, Pedido pedidoNovo){
+        Pedido pedidoAtual = buscarPorId(id);
+
+        pedidoAtual.setItensPedidoList(pedidoNovo.getItensPedidoList());
+        pedidoAtual.getItensPedidoList().stream().forEach(p -> p.setPedido(pedidoAtual));
 
         return pedidoRepository.save(pedidoAtual);
     }
