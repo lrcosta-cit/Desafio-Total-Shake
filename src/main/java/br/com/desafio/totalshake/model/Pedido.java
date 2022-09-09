@@ -28,10 +28,16 @@ public class Pedido {
     private Status status;
 
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "pedido",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = false)
     private List<ItemPedido> itensPedidoList;
+
+    @PrePersist
+    void prePersist(){
+        this.dataHora = LocalDateTime.now();
+        this.status = Status.REALIZADO;
+    }
 
 }
